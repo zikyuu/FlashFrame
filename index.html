@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FlashFrame</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>FlashFrame</h1>
+    <p id="status">Loading pose model…</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Reference pose</h2>
+      <label class="upload">
+        <input type="file" id="ref-input" accept="image/*" />
+        Choose a photo
+      </label>
+      <div class="stage">
+        <canvas id="ref-canvas"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Live webcam</h2>
+      <video id="live-video" autoplay playsinline muted></video>
+      <div class="stage">
+        <canvas id="live-canvas"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

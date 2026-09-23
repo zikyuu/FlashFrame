@@ -1,0 +1,75 @@
+:root {
+  color-scheme: light dark;
+  --bg: #111318;
+  --panel: #1a1d24;
+  --border: #2a2e38;
+  --text: #e7e9ee;
+  --muted: #8a90a2;
+  --accent: #4f6df5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+header { margin-bottom: 20px; }
+header h1 { margin: 0 0 4px; font-size: 1.4rem; }
+#status { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 720px) {
+  main { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.upload {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.upload input { display: none; }
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#live-video { display: none; }
