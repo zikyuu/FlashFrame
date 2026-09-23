@@ -16,6 +16,8 @@ const liveCanvas = document.getElementById("live-canvas");
 const refCtx = refCanvas.getContext("2d");
 const liveCtx = liveCanvas.getContext("2d");
 
+const mirrorToggle = document.getElementById("mirror-toggle");
+
 // Exposed for the next build step (angle calculation) to read from.
 window.referenceLandmarks = null;
 window.liveLandmarks = null;
@@ -113,6 +115,14 @@ async function liveLoop() {
 }
 
 refInput.addEventListener("change", handleReferenceUpload);
+
+// Mirroring is a display-only transform (CSS scaleX on the canvas) — it never touches
+// the frame passed to detectForVideo(), so landmark data and angle diffs are identical
+// either way. Defaults to off: unmirrored matches how a real camera will see the pose.
+mirrorToggle.addEventListener("click", () => {
+  const mirrored = liveCanvas.classList.toggle("mirrored");
+  mirrorToggle.textContent = mirrored ? "Mirror: On" : "Mirror: Off";
+});
 
 initLandmarker()
   .then(startWebcam)

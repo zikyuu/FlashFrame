@@ -26,7 +26,10 @@
     </section>
 
     <section class="panel">
-      <h2>Live webcam</h2>
+      <div class="panel-head">
+        <h2>Live webcam</h2>
+        <button type="button" id="mirror-toggle" class="upload">Mirror: Off</button>
+      </div>
       <video id="live-video" autoplay playsinline muted></video>
       <div class="stage">
         <canvas id="live-canvas"></canvas>

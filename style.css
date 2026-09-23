@@ -45,6 +45,15 @@ main {
   color: var(--muted);
 }
 
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.panel-head h2 { margin: 0; }
+
 .upload {
   display: inline-block;
   margin-bottom: 12px;
@@ -70,6 +79,9 @@ main {
   inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
+
+#live-canvas.mirrored { transform: scaleX(-1); }
 
 #live-video { display: none; }
