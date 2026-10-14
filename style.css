@@ -49,10 +49,23 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   margin-bottom: 12px;
 }
-.panel-head h2 { margin: 0; }
+.panel-head h2 { margin: 0; flex-shrink: 0; white-space: nowrap; }
+
+.head-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.checkbox-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.checkbox-toggle input { cursor: pointer; }
 
 .upload {
   display: inline-block;
@@ -68,7 +81,8 @@ main {
 .stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: var(--stage-aspect, 1.3333);
+  max-height: 72vh;
   background: #000;
   border-radius: 8px;
   overflow: hidden;
@@ -83,5 +97,85 @@ main {
 }
 
 #live-canvas.mirrored { transform: scaleX(-1); }
+
+.meters { margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
+.meter { display: flex; flex-direction: column; gap: 4px; }
+.meter-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.meter-track {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #f87171, #facc15, #4ade80);
+  border: 1px solid var(--border);
+}
+.meter-marker {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--panel);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, -50%);
+  transition: left 0.15s ease;
+}
+.meter-caption {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.debug {
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--muted);
+  font: 0.68rem/1.45 ui-monospace, "SF Mono", Menlo, monospace;
+  white-space: pre-wrap;
+}
+.meter-caption.level-green { color: #4ade80; }
+.meter-caption.level-yellow { color: #facc15; }
+.meter-caption.level-red { color: #f87171; }
+
+.timer-controls { margin-top: 12px; }
+.control-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.duration-group { display: flex; gap: 6px; }
+.duration-btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.duration-btn.selected { border-color: var(--accent); color: var(--text); }
+
+.countdown-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.hidden { display: none; }
 
 #live-video { display: none; }

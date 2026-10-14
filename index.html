@@ -10,7 +10,7 @@
 
   <header>
     <h1>FlashFrame</h1>
-    <p id="status">Loading pose model…</p>
+    <p id="status">Loading models…</p>
   </header>
 
   <main>
@@ -28,11 +28,65 @@
     <section class="panel">
       <div class="panel-head">
         <h2>Live webcam</h2>
-        <button type="button" id="mirror-toggle" class="upload">Mirror: Off</button>
+        <div class="head-actions">
+          <label class="checkbox-toggle">
+            <input type="checkbox" id="show-landmarks" checked />
+            Show landmarks
+          </label>
+          <label class="checkbox-toggle" title="Show which individual metrics are pulling each score down">
+            <input type="checkbox" id="show-debug" />
+            Debug
+          </label>
+          <button
+            type="button"
+            id="mirror-toggle"
+            class="upload"
+            title="Display only — the score adapts to match (mirrored reference vs. mirrored view), but an exported capture always scores against the true, unmirrored reference"
+          >Mirror: Off</button>
+        </div>
       </div>
+      <div class="meters">
+        <div class="meter">
+          <span class="meter-label">Body</span>
+          <div class="meter-track">
+            <div id="meter-marker" class="meter-marker hidden"></div>
+          </div>
+          <span id="meter-caption" class="meter-caption">Upload a reference first</span>
+        </div>
+        <div class="meter">
+          <span class="meter-label">Face</span>
+          <div class="meter-track">
+            <div id="face-meter-marker" class="meter-marker hidden"></div>
+          </div>
+          <span id="face-meter-caption" class="meter-caption">Upload a reference first</span>
+        </div>
+        <div class="meter">
+          <span class="meter-label">Hands</span>
+          <div class="meter-track">
+            <div id="hands-meter-marker" class="meter-marker hidden"></div>
+          </div>
+          <span id="hands-meter-caption" class="meter-caption">Upload a reference first</span>
+        </div>
+      </div>
+      <pre id="debug" class="debug hidden"></pre>
       <video id="live-video" autoplay playsinline muted></video>
       <div class="stage">
         <canvas id="live-canvas"></canvas>
+        <div id="countdown-overlay" class="countdown-overlay hidden"></div>
+      </div>
+      <div class="timer-controls">
+        <div id="pre-capture-controls" class="control-group">
+          <div class="duration-group" role="group" aria-label="Countdown duration">
+            <button type="button" class="duration-btn selected" data-seconds="3">3s</button>
+            <button type="button" class="duration-btn" data-seconds="5">5s</button>
+            <button type="button" class="duration-btn" data-seconds="10">10s</button>
+          </div>
+          <button type="button" id="start-timer" class="upload">Start timer</button>
+        </div>
+        <div id="post-capture-controls" class="control-group hidden">
+          <button type="button" id="retry" class="upload">Retry</button>
+          <button type="button" id="export-photo" class="upload">Export photo</button>
+        </div>
       </div>
     </section>
   </main>
