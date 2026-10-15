@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>FlashFrame</title>
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -14,7 +14,7 @@
   </header>
 
   <main>
-    <section class="panel">
+    <section class="panel ref-panel">
       <h2>Reference pose</h2>
       <label class="upload">
         <input type="file" id="ref-input" accept="image/*" />
@@ -25,24 +25,38 @@
       </div>
     </section>
 
-    <section class="panel">
+    <section class="panel live-panel">
       <div class="panel-head">
-        <h2>Live webcam</h2>
+        <h2>Camera</h2>
         <div class="head-actions">
-          <label class="checkbox-toggle">
-            <input type="checkbox" id="show-landmarks" checked />
-            Show landmarks
+          <label class="checkbox-toggle" title="Speak instructions out loud, like a director — for when you can't see the screen">
+            <input type="checkbox" id="voice-toggle" />
+            Voice
           </label>
-          <label class="checkbox-toggle" title="Show which individual metrics are pulling each score down">
-            <input type="checkbox" id="show-debug" />
-            Debug
-          </label>
+          <button type="button" id="flip-camera" class="upload hidden" title="Switch between the front and back camera">Flip</button>
           <button
             type="button"
             id="mirror-toggle"
             class="upload"
-            title="Display only — the score adapts to match (mirrored reference vs. mirrored view), but an exported capture always scores against the true, unmirrored reference"
+            title="Mirror view, like a mirror. The reference is flipped to match so scoring still agrees, and captures and exports are saved the way you saw them"
           >Mirror: Off</button>
+          <details class="more">
+            <summary>More</summary>
+            <div class="more-body">
+              <label class="checkbox-toggle">
+                <input type="checkbox" id="show-landmarks" checked />
+                Show landmarks
+              </label>
+              <label class="checkbox-toggle" title="Don't score eye expressions — use when the reference (or you) is wearing sunglasses, or glasses glare confuses the eyes">
+                <input type="checkbox" id="ignore-eyes" />
+                Ignore eyes
+              </label>
+              <label class="checkbox-toggle" title="Show which individual metrics are pulling each score down">
+                <input type="checkbox" id="show-debug" />
+                Debug
+              </label>
+            </div>
+          </details>
         </div>
       </div>
       <div class="meters">
@@ -72,7 +86,10 @@
       <video id="live-video" autoplay playsinline muted></video>
       <div class="stage">
         <canvas id="live-canvas"></canvas>
+        <canvas id="ref-pip" class="ref-pip hidden" title="Your reference — tap to enlarge"></canvas>
+        <p id="coach" class="coach" aria-live="polite">Upload a reference photo and I'll coach you into it.</p>
         <div id="countdown-overlay" class="countdown-overlay hidden"></div>
+        <div id="session-badge" class="session-badge hidden"></div>
       </div>
       <div class="timer-controls">
         <div id="pre-capture-controls" class="control-group">
@@ -81,7 +98,10 @@
             <button type="button" class="duration-btn" data-seconds="5">5s</button>
             <button type="button" class="duration-btn" data-seconds="10">10s</button>
           </div>
-          <button type="button" id="start-timer" class="upload">Start timer</button>
+          <div class="action-group">
+            <button type="button" id="auto-snap" class="upload" title="Keeps watching until you hit a 90% match, saving your best moments (75%+) along the way. Press Stop any time to see what it caught">Auto-snap</button>
+            <button type="button" id="start-timer" class="upload" title="Count down, then take one photo">Timer</button>
+          </div>
         </div>
         <div id="post-capture-controls" class="control-group hidden">
           <button type="button" id="retry" class="upload">Retry</button>
@@ -90,6 +110,11 @@
       </div>
     </section>
   </main>
+
+  <section id="gallery" class="panel gallery hidden">
+    <h2>Pick your shot</h2>
+    <div id="thumbs" class="thumbs"></div>
+  </section>
 
   <script type="module" src="main.js"></script>
 </body>
