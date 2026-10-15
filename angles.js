@@ -45,9 +45,12 @@ export function angleAt(a, b, c) {
   return deg;
 }
 
-// Signed angle of the line p1->p2 off horizontal (0 when level).
+// How far p2 sits below p1, as an angle off horizontal (0 when level, positive when p2 is
+// lower). Uses |dx| so it doesn't matter which point is on the left of the image — a plain
+// atan2 would read ~±180° for a person facing the camera (their left point is on the image's
+// right) and flip sign across level, turning a tiny wobble into a "100% off".
 export function tiltFromHorizontal(p1, p2) {
-  return (Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180) / Math.PI;
+  return (Math.atan2(p2.y - p1.y, Math.abs(p2.x - p1.x)) * 180) / Math.PI;
 }
 
 // Signed angle of the line base->top off vertical (0 when top is directly above base).
@@ -119,13 +122,17 @@ export function scorePose(reference, live) {
   );
 
   if (joints.length < MIN_JOINTS) {
-    return { level: "unknown", score: null, diffs: {}, joints, totalJoints };
+    return { level: "unknown", score: null, diffs: {}, deltas: {}, joints, totalJoints };
   }
 
+  // `deltas` keep the sign (live minus reference, in degrees) so the coach can say which
+  // way to move; `diffs` are the normalized sizes that drive the score.
   const diffs = {};
+  const deltas = {};
   for (const joint of joints) {
-    diffs[joint] = norm(reference.angles[joint] - live.angles[joint], JOINT_SCALE_DEG);
+    deltas[joint] = live.angles[joint] - reference.angles[joint];
+    diffs[joint] = norm(deltas[joint], JOINT_SCALE_DEG);
   }
 
-  return { ...summarize(diffs), diffs, joints, totalJoints };
+  return { ...summarize(diffs), diffs, deltas, joints, totalJoints };
 }
