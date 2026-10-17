@@ -4,13 +4,74 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>FlashFrame</title>
+<link rel="preload" href="fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header>
+    <!-- decorative: a retro camera (left) and a polaroid + film strip (right) -->
+    <svg class="deco deco-camera" aria-hidden="true" focusable="false" viewBox="0 0 140 110" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cam-body" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" /><stop offset="0.45" stop-color="#e3e8f7" />
+          <stop offset="0.5" stop-color="#b9c2de" /><stop offset="1" stop-color="#eef1fb" />
+        </linearGradient>
+        <linearGradient id="cam-band" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3b4058" /><stop offset="1" stop-color="#14172a" />
+        </linearGradient>
+        <radialGradient id="cam-lens" cx="0.38" cy="0.32" r="0.85">
+          <stop offset="0" stop-color="#c8e8ff" /><stop offset="0.32" stop-color="#3b8bff" />
+          <stop offset="0.72" stop-color="#0a2f8f" /><stop offset="1" stop-color="#050c33" />
+        </radialGradient>
+        <radialGradient id="cam-flash" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#ffffff" /><stop offset="0.45" stop-color="#fff6a8" />
+          <stop offset="1" stop-color="#ffd23f" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <circle cx="24" cy="20" r="24" fill="url(#cam-flash)" />
+      <path d="M24 0l3.2 13.6L41 17l-13.8 3.4L24 34l-3.2-13.6L7 17l13.8-3.4z" fill="#fff" />
+      <rect x="52" y="19" width="38" height="15" rx="5" fill="url(#cam-body)" stroke="#6b78b8" stroke-width="2" />
+      <rect x="100" y="23" width="13" height="8" rx="2" fill="#e0502a" stroke="#fff" stroke-width="1.5" />
+      <rect x="12" y="29" width="116" height="72" rx="12" fill="url(#cam-body)" stroke="#6b78b8" stroke-width="2" />
+      <path d="M12 58H128V89a12 12 0 0 1-12 12H24A12 12 0 0 1 12 89Z" fill="url(#cam-band)" />
+      <rect x="20" y="35" width="28" height="14" rx="3" fill="#fff7c2" stroke="#b9a64a" stroke-width="1.5" />
+      <rect x="96" y="36" width="22" height="13" rx="3" fill="#1b2a66" stroke="#6b78b8" stroke-width="1.5" />
+      <circle cx="70" cy="70" r="27" fill="#cfd6ef" stroke="#5a68a8" stroke-width="3" />
+      <circle cx="70" cy="70" r="20" fill="url(#cam-lens)" />
+      <ellipse cx="62" cy="62" rx="7" ry="4" transform="rotate(-35 62 62)" fill="#fff" opacity="0.8" />
+      <circle cx="120" cy="66" r="3" fill="#ff5a4d" stroke="#fff" stroke-width="1" />
+    </svg>
+
     <h1>FlashFrame</h1>
-    <p id="status">Loading models…</p>
+
+    <svg class="deco deco-photos" aria-hidden="true" focusable="false" viewBox="0 0 140 110" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="film-holes" width="8" height="12" patternUnits="userSpaceOnUse">
+          <rect x="1" y="3" width="5" height="6" rx="1.2" fill="#e8ecf9" />
+        </pattern>
+        <linearGradient id="pic-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1c5fd8" /><stop offset="1" stop-color="#bfe0ff" />
+        </linearGradient>
+      </defs>
+      <g transform="rotate(9 44 56)">
+        <rect x="24" y="4" width="42" height="100" rx="4" fill="#1a1c28" />
+        <rect x="27" y="6" width="8" height="96" fill="url(#film-holes)" />
+        <rect x="55" y="6" width="8" height="96" fill="url(#film-holes)" />
+        <rect x="38" y="12" width="14" height="24" rx="1.5" fill="url(#pic-sky)" />
+        <rect x="38" y="42" width="14" height="24" rx="1.5" fill="url(#pic-sky)" />
+        <rect x="38" y="72" width="14" height="24" rx="1.5" fill="url(#pic-sky)" />
+        <path d="M38 36q7-8 14 0v0z M38 66q7-8 14 0z M38 96q7-8 14 0z" fill="#5fb43a" />
+      </g>
+      <g transform="rotate(-9 96 56)">
+        <rect x="64" y="12" width="64" height="82" rx="3" fill="#ffffff" stroke="#c3cbea" stroke-width="1.5" />
+        <rect x="70" y="18" width="52" height="52" fill="url(#pic-sky)" />
+        <circle cx="108" cy="30" r="6" fill="#fff6a8" />
+        <path d="M70 70V56q16-14 30-3t22 1v16z" fill="#5fb43a" />
+        <path d="M76 82q10-6 20 0t18-1" fill="none" stroke="#8a96cf" stroke-width="2" stroke-linecap="round" />
+      </g>
+      <path d="M118 8l2.4 8 8 2.4-8 2.4L118 29l-2.4-8.2-8-2.4 8-2.4z" fill="#fff" opacity="0.95" />
+    </svg>
   </header>
 
   <main>
@@ -20,6 +81,7 @@
         <input type="file" id="ref-input" accept="image/*" />
         Choose a photo
       </label>
+      <p id="status" class="statusbar" role="status">Loading models…</p>
       <div class="stage">
         <canvas id="ref-canvas"></canvas>
       </div>
